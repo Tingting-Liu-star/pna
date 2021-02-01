@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import binaryfunction
 
 SUPPORTED_ACTIVATION_MAP = {'ReLU', 'Sigmoid', 'Tanh', 'ELU', 'SELU', 'GLU', 'LeakyReLU', 'Softplus', 'None'}
-
 
 def get_activation(activation):
     """ returns the activation function represented by the input string """
@@ -179,9 +179,15 @@ class FCLayer(nn.Module):
             self.linear.bias.data.zero_()
 
     def forward(self, x):
+
+        x = binaryfunction.BinaryQuantize().apply(x)
+        self.linear.weight = binaryfunction.BinaryQuantize().apply(self.linear.weight)
+        self.linear.bias = binaryfunction.BinaryQuantize().apply(self.linear.bias)
+        
+        print(x)
         print(self.linear.weight)
         print(self.linear.bias)
-        
+
         h = self.linear(x)
         if self.activation is not None:
             h = self.activation(h)
