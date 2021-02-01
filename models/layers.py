@@ -184,9 +184,9 @@ class FCLayer(nn.Module):
         self.linear.weight = nn.Parameter(binaryfunction.BinaryQuantize().apply(self.linear.weight))
         self.linear.bias = nn.Parameter(binaryfunction.BinaryQuantize().apply(self.linear.bias))
         
-        print(x)
-        print(self.linear.weight)
-        print(self.linear.bias)
+        print('x: ', x)
+        print('weight: ', self.linear.weight)
+        print('bias: ', self.linear.bias)
 
         h = self.linear(x)
         if self.activation is not None:
