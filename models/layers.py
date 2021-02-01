@@ -179,6 +179,7 @@ class FCLayer(nn.Module):
             self.linear.bias.data.zero_()
 
     def forward(self, x):
+        print(self.linear)
         h = self.linear(x)
         if self.activation is not None:
             h = self.activation(h)
