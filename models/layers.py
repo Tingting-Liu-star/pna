@@ -180,12 +180,14 @@ class FCLayer(nn.Module):
 
     def forward(self, x):
 
+        print('bias: ', self.linear.bias)
+        
         x = binaryfunction.BinaryQuantize().apply(x)
         self.linear.weight = nn.Parameter(binaryfunction.BinaryQuantize().apply(self.linear.weight))
         self.linear.bias = nn.Parameter(binaryfunction.BinaryQuantize().apply(self.linear.bias))
         
-        print('x: ', x)
-        print('weight: ', self.linear.weight)
+        # print('x: ', x)
+        # print('weight: ', self.linear.weight)
         print('bias: ', self.linear.bias)
 
         h = self.linear(x)
